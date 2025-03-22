@@ -105,8 +105,14 @@ function updateSettingsForm() {
     // Flowmodoro settings
     document.getElementById('break-ratio').value = flowmodoroSettings.breakRatio;
     document.getElementById('minimum-flow-time').value = flowmodoroSettings.minimumFlowTime / 60;
-    document.getElementById('maximum-flow-time').value = flowmodoroSettings.maximumFlowTime / 60;
-    document.getElementById('flow-notify-sound').checked = flowmodoroSettings.notifySound;
+    
+    // Check if maximum flow time input exists
+    const maxFlowElement = document.getElementById('maximum-flow-time');
+    if (maxFlowElement) {
+        maxFlowElement.value = flowmodoroSettings.maximumFlowTime / 60;
+    }
+    
+    document.getElementById('notify-sound-flow').checked = flowmodoroSettings.notifySound;
 }
 
 /**
@@ -188,7 +194,7 @@ function setupTimerEventListeners() {
     document.getElementById('pomodoro-settings-btn').addEventListener('click', openPomodoroSettings);
     document.getElementById('flowmodoro-settings-btn').addEventListener('click', openFlowmodoroSettings);
     
-    // Save settings buttons
+    // Settings save buttons
     document.getElementById('save-pomodoro-settings').addEventListener('click', savePomodoroSettings);
     document.getElementById('save-flowmodoro-settings').addEventListener('click', saveFlowmodoroSettings);
     
@@ -901,8 +907,15 @@ async function saveFlowmodoroSettings() {
         // Get form values
         const breakRatio = parseInt(document.getElementById('break-ratio').value, 10);
         const minimumFlowTime = parseInt(document.getElementById('minimum-flow-time').value, 10) * 60;
-        const maximumFlowTime = parseInt(document.getElementById('maximum-flow-time').value, 10) * 60;
-        const notifySound = document.getElementById('flow-notify-sound').checked;
+        
+        // Default maximum flow time if the element doesn't exist
+        let maximumFlowTime = 90 * 60; // Default 90 minutes
+        const maxFlowElement = document.getElementById('maximum-flow-time');
+        if (maxFlowElement) {
+            maximumFlowTime = parseInt(maxFlowElement.value, 10) * 60;
+        }
+        
+        const notifySound = document.getElementById('notify-sound-flow').checked;
         
         // Validate
         if (isNaN(breakRatio) || breakRatio <= 0) {
