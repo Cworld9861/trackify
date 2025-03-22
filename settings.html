@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackify - Settings</title>
+    <meta name="description" content="Manage your settings in Trackify, a productivity web app">
+    <link rel="manifest" href="static/manifest.json">
+    <meta name="theme-color" content="#6200ea">
+    <link rel="icon" href="static/icon-192x192.png">
+    <link rel="apple-touch-icon" href="static/icon-192x192.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-chart-line"></i> Trackify</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="tasks.html"><i class="fas fa-tasks"></i> Tasks</a></li>
+                    <li><a href="habits.html"><i class="fas fa-calendar-check"></i> Habits</a></li>
+                    <li><a href="timer.html"><i class="fas fa-clock"></i> Timer</a></li>
+                    <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li class="active"><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <span><i class="fas fa-sun"></i></span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span><i class="fas fa-moon"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="main-header">
+                <button class="menu-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h2>Settings</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-circle">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="settings-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-palette"></i> Appearance</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="setting-item">
+                                        <div class="setting-label">
+                                            <h5>Theme</h5>
+                                            <p>Choose between light and dark mode</p>
+                                        </div>
+                                        <div class="setting-control">
+                                            <div class="theme-toggle-large">
+                                                <span><i class="fas fa-sun"></i> Light</span>
+                                                <label class="switch">
+                                                    <input type="checkbox" id="theme-switch-settings">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                                <span>Dark <i class="fas fa-moon"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-download"></i> Data Management</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="setting-item">
+                                        <div class="setting-label">
+                                            <h5>Export Data</h5>
+                                            <p>Download all your data as a JSON file</p>
+                                        </div>
+                                        <div class="setting-control">
+                                            <button class="btn btn-primary" id="export-data">
+                                                <i class="fas fa-download"></i> Export
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-item">
+                                        <div class="setting-label">
+                                            <h5>Import Data</h5>
+                                            <p>Import data from a previously exported file</p>
+                                        </div>
+                                        <div class="setting-control">
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" id="import-file">
+                                                <button class="btn btn-primary" id="import-data">
+                                                    <i class="fas fa-upload"></i> Import
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-item">
+                                        <div class="setting-label">
+                                            <h5>Reset Data</h5>
+                                            <p>Clear all application data (cannot be undone)</p>
+                                        </div>
+                                        <div class="setting-control">
+                                            <button class="btn btn-danger" id="reset-data">
+                                                <i class="fas fa-trash-alt"></i> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-mobile-alt"></i> App Installation</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="setting-item">
+                                        <div class="setting-label">
+                                            <h5>Install as App</h5>
+                                            <p>Install Trackify as a standalone application on your device</p>
+                                        </div>
+                                        <div class="setting-control">
+                                            <button class="btn btn-primary" id="install-app-btn">
+                                                <i class="fas fa-download"></i> Install App
+                                            </button>
+                                            <p id="pwa-status" class="text-muted mt-2">Checking installation status...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h4><i class="fas fa-info-circle"></i> About</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="about-section">
+                                        <h5>Trackify</h5>
+                                        <p>Version 1.0.0</p>
+                                        <p>A visually rich productivity web app with task/habit tracking, time management tools, and course organization with PWA support.</p>
+                                        <p>All data is stored locally on your device.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="main-footer">
+                <p>&copy; 2023 Trackify. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Settings Confirmation Modal -->
+    <div class="modal fade" id="confirmation-modal" tabindex="-1" aria-labelledby="confirmation-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmation-modal-label">Confirm Action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="confirmation-modal-body">
+                    Are you sure you want to proceed with this action?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm-action-btn">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/db.js"></script>
+    <script src="static/js/app.js"></script>
+    <script src="static/js/settings.js"></script>
+    <script>
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('static/js/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

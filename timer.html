@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6200ea">
+    <title>Timer - Trackify</title>
+    <link rel="manifest" href="static/manifest.json">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-chart-line"></i> Trackify</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="tasks.html"><i class="fas fa-tasks"></i> Tasks</a></li>
+                    <li><a href="habits.html"><i class="fas fa-calendar-check"></i> Habits</a></li>
+                    <li class="active"><a href="timer.html"><i class="fas fa-clock"></i> Timer</a></li>
+                    <li><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <span><i class="fas fa-sun"></i></span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span><i class="fas fa-moon"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="main-header">
+                <button class="menu-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h2>Time Management</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-circle">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="timer-content">
+                <div class="timer-options">
+                    <button class="btn btn-timer-option active" data-timer-type="pomodoro">Pomodoro</button>
+                    <button class="btn btn-timer-option" data-timer-type="flowmodoro">Flowmodoro</button>
+                </div>
+
+                <div class="timer-section" id="pomodoro-section">
+                    <div class="timer-container">
+                        <div class="timer-visual">
+                            <div class="timer-circle">
+                                <div class="timer-progress" id="pomodoro-progress"></div>
+                                <div class="timer-display">
+                                    <div class="timer-time" id="pomodoro-time">25:00</div>
+                                    <div class="timer-label" id="pomodoro-label">Focus</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="btn btn-timer-control" id="pomodoro-start">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="pomodoro-pause" disabled>
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="pomodoro-reset">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="pomodoro-fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="timer-info">
+                        <div class="timer-info-card">
+                            <h3>About Pomodoro</h3>
+                            <p>The Pomodoro Technique is a time management method that uses a timer to break work into intervals, traditionally 25 minutes in length, separated by short breaks.</p>
+                            <ul>
+                                <li><strong>Focus Time:</strong> 25 minutes</li>
+                                <li><strong>Short Break:</strong> 5 minutes</li>
+                                <li><strong>Long Break:</strong> 15 minutes (after 4 focus sessions)</li>
+                            </ul>
+                            <button class="btn btn-outline-primary" id="pomodoro-settings-btn">
+                                <i class="fas fa-cog"></i> Customize Settings
+                            </button>
+                        </div>
+                        <div class="timer-sessions">
+                            <h4>Sessions</h4>
+                            <div class="session-indicators" id="pomodoro-sessions">
+                                <span class="session-dot active"></span>
+                                <span class="session-dot"></span>
+                                <span class="session-dot"></span>
+                                <span class="session-dot"></span>
+                            </div>
+                            <div class="session-info">
+                                <p>Completed Today: <span id="pomodoro-completed">0</span></p>
+                                <p>Total Focus Time: <span id="pomodoro-total-time">0 min</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timer-section" id="flowmodoro-section" style="display: none;">
+                    <div class="timer-container">
+                        <div class="timer-visual">
+                            <div class="timer-circle">
+                                <div class="timer-progress" id="flowmodoro-progress"></div>
+                                <div class="timer-display">
+                                    <div class="timer-time" id="flowmodoro-time">00:00</div>
+                                    <div class="timer-label" id="flowmodoro-label">Flow</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timer-controls">
+                            <button class="btn btn-timer-control" id="flowmodoro-start">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="flowmodoro-pause" disabled>
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="flowmodoro-break" disabled>
+                                <i class="fas fa-coffee"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="flowmodoro-reset">
+                                <i class="fas fa-redo-alt"></i>
+                            </button>
+                            <button class="btn btn-timer-control" id="flowmodoro-fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="timer-info">
+                        <div class="timer-info-card">
+                            <h3>About Flowmodoro</h3>
+                            <p>The Flowmodoro technique is a flexible time management approach that adapts to your natural workflow. Instead of fixed intervals, you work until your focus begins to wane, then take a proportional break.</p>
+                            <ul>
+                                <li><strong>Flow Time:</strong> Work as long as you're focused</li>
+                                <li><strong>Break Ratio:</strong> 1:5 (5 minutes break for every 25 minutes of work)</li>
+                                <li><strong>Tracking:</strong> The timer counts up instead of down</li>
+                            </ul>
+                            <button class="btn btn-outline-primary" id="flowmodoro-settings-btn">
+                                <i class="fas fa-cog"></i> Customize Settings
+                            </button>
+                        </div>
+                        <div class="timer-sessions">
+                            <h4>Today's Stats</h4>
+                            <div class="session-info">
+                                <p>Flow Sessions: <span id="flowmodoro-sessions-count">0</span></p>
+                                <p>Total Flow Time: <span id="flowmodoro-total-time">0 min</span></p>
+                                <p>Longest Flow: <span id="flowmodoro-longest">0 min</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-select-section">
+                    <h4>What are you working on?</h4>
+                    <div class="task-select-container">
+                        <select class="form-select" id="timer-task-select">
+                            <option value="">Select a task...</option>
+                            <!-- Tasks will be loaded dynamically -->
+                        </select>
+                        <a href="tasks.html" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> Add New Task
+                        </a>
+                    </div>
+                </div>
+
+                <div class="timer-history">
+                    <h4>Recent Sessions</h4>
+                    <div class="timer-history-list" id="timer-history-list">
+                        <!-- Timer history will be loaded here dynamically -->
+                        <div class="empty-state" id="empty-timer-history">
+                            <svg width="120" height="120" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20ZM12.5 7H11V13L16.2 16.2L17 14.9L12.5 12.2V7Z" fill="#6200ea" opacity="0.3"/>
+                            </svg>
+                            <h3>No sessions yet</h3>
+                            <p>Your timer sessions will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pomodoro Settings Modal -->
+            <div class="modal fade" id="pomodoroSettingsModal" tabindex="-1" aria-labelledby="pomodoroSettingsModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="pomodoroSettingsModalLabel">Pomodoro Settings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="pomodoro-settings-form">
+                                <div class="mb-3">
+                                    <label for="focus-duration" class="form-label">Focus Duration (minutes)</label>
+                                    <input type="number" class="form-control" id="focus-duration" min="1" max="60" value="25">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="short-break-duration" class="form-label">Short Break Duration (minutes)</label>
+                                    <input type="number" class="form-control" id="short-break-duration" min="1" max="30" value="5">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="long-break-duration" class="form-label">Long Break Duration (minutes)</label>
+                                    <input type="number" class="form-control" id="long-break-duration" min="1" max="60" value="15">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="sessions-before-long-break" class="form-label">Sessions Before Long Break</label>
+                                    <input type="number" class="form-control" id="sessions-before-long-break" min="1" max="10" value="4">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="auto-start-breaks">
+                                    <label class="form-check-label" for="auto-start-breaks">Auto-start Breaks</label>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="notify-sound">
+                                    <label class="form-check-label" for="notify-sound">Play Sound on Completion</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-pomodoro-settings">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flowmodoro Settings Modal -->
+            <div class="modal fade" id="flowmodoroSettingsModal" tabindex="-1" aria-labelledby="flowmodoroSettingsModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="flowmodoroSettingsModalLabel">Flowmodoro Settings</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="flowmodoro-settings-form">
+                                <div class="mb-3">
+                                    <label for="break-ratio" class="form-label">Break Ratio (1:x)</label>
+                                    <input type="number" class="form-control" id="break-ratio" min="1" max="10" value="5">
+                                    <div class="form-text">For every minute of work, take x seconds of break. Default is 1:5 (5 seconds of break for each minute of work).</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="minimum-flow-time" class="form-label">Minimum Flow Time (minutes)</label>
+                                    <input type="number" class="form-control" id="minimum-flow-time" min="5" max="30" value="10">
+                                    <div class="form-text">Minimum time to work before being able to take a break.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="maximum-flow-time" class="form-label">Maximum Flow Time (minutes)</label>
+                                    <input type="number" class="form-control" id="maximum-flow-time" min="30" max="120" value="90">
+                                    <div class="form-text">Maximum time to work before getting a reminder to take a break.</div>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="notify-sound-flow">
+                                    <label class="form-check-label" for="notify-sound-flow">Play Sound on Timer Updates</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-flowmodoro-settings">Save Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fullscreen Timer -->
+            <div class="fullscreen-timer" id="fullscreen-timer">
+                <div class="fullscreen-timer-container">
+                    <div class="fullscreen-timer-circle">
+                        <div class="timer-progress" id="fullscreen-progress"></div>
+                        <div class="timer-display">
+                            <div class="timer-time" id="fullscreen-time">25:00</div>
+                            <div class="timer-label" id="fullscreen-label">Focus</div>
+                        </div>
+                    </div>
+                    <div class="fullscreen-timer-controls">
+                        <button class="btn btn-timer-control" id="fullscreen-pause">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="btn btn-timer-control" id="fullscreen-reset">
+                            <i class="fas fa-redo-alt"></i>
+                        </button>
+                        <button class="btn btn-timer-control" id="exit-fullscreen">
+                            <i class="fas fa-compress"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="main-footer">
+                <p>&copy; 2023 Trackify. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="static/js/db.js"></script>
+    <script src="static/js/app.js"></script>
+    <script src="static/js/timer.js"></script>
+    <script>
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('static/js/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

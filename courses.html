@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6200ea">
+    <title>Courses - Trackify</title>
+    <link rel="manifest" href="static/manifest.json">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-chart-line"></i> Trackify</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="tasks.html"><i class="fas fa-tasks"></i> Tasks</a></li>
+                    <li><a href="habits.html"><i class="fas fa-calendar-check"></i> Habits</a></li>
+                    <li><a href="timer.html"><i class="fas fa-clock"></i> Timer</a></li>
+                    <li class="active"><a href="courses.html"><i class="fas fa-book"></i> Courses</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="theme-toggle">
+                    <span><i class="fas fa-sun"></i></span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span><i class="fas fa-moon"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="main-header">
+                <button class="menu-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="header-title">
+                    <h2>Courses</h2>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="user-profile">
+                        <div class="profile-circle">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="courses-content">
+                <div class="courses-header">
+                    <div class="search-container">
+                        <input type="text" id="course-search" class="form-control" placeholder="Search courses...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <button class="btn btn-primary" id="add-course-btn">
+                        <i class="fas fa-plus"></i> Add Course
+                    </button>
+                </div>
+
+                <div class="courses-overview">
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3 id="total-courses-count">0</h3>
+                            <p>Total Courses</p>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-spinner"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3 id="in-progress-count">0</h3>
+                            <p>In Progress</p>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3 id="completed-courses-count">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="overview-content">
+                            <h3 id="study-materials-count">0</h3>
+                            <p>Study Materials</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="courses-filters">
+                    <div class="filter-buttons">
+                        <button class="btn btn-filter active" data-filter="all">All</button>
+                        <button class="btn btn-filter" data-filter="in-progress">In Progress</button>
+                        <button class="btn btn-filter" data-filter="completed">Completed</button>
+                        <button class="btn btn-filter" data-filter="not-started">Not Started</button>
+                    </div>
+                    <div class="sort-options">
+                        <label for="sort-courses">Sort by:</label>
+                        <select id="sort-courses" class="form-select">
+                            <option value="recent">Recently Updated</option>
+                            <option value="name">Name</option>
+                            <option value="progress">Progress</option>
+                            <option value="date-added">Date Added</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="courses-container">
+                    <div class="courses-grid" id="courses-grid">
+                        <!-- Courses will be loaded here dynamically -->
+                        <div class="empty-state" id="empty-courses-state">
+                            <svg width="150" height="150" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 5C19.89 4.65 18.67 4.5 17.5 4.5C15.55 4.5 13.45 4.9 12 6C10.55 4.9 8.45 4.5 6.5 4.5C4.55 4.5 2.45 4.9 1 6V20.65C1 20.9 1.25 21.15 1.5 21.15C1.6 21.15 1.65 21.1 1.75 21.1C3.1 20.45 5.05 20 6.5 20C8.45 20 10.55 20.4 12 21.5C13.35 20.65 15.8 20 17.5 20C19.15 20 20.85 20.3 22.25 21.05C22.35 21.1 22.4 21.1 22.5 21.1C22.75 21.1 23 20.85 23 20.6V6C22.4 5.55 21.75 5.25 21 5ZM21 18.5C19.9 18.15 18.7 18 17.5 18C15.8 18 13.35 18.65 12 19.5V8C13.35 7.15 15.8 6.5 17.5 6.5C18.7 6.5 19.9 6.65 21 7V18.5Z" fill="#6200ea" opacity="0.3"/>
+                                <path d="M17.5 10.5C18.38 10.5 19.23 10.59 20 10.76V9.24C19.21 9.09 18.36 9 17.5 9C15.8 9 14.26 9.29 13 9.83V11.49C14.13 10.85 15.7 10.5 17.5 10.5Z" fill="#6200ea"/>
+                                <path d="M13 12.49V14.15C14.13 13.51 15.7 13.16 17.5 13.16C18.38 13.16 19.23 13.25 20 13.42V11.9C19.21 11.75 18.36 11.66 17.5 11.66C15.8 11.66 14.26 11.96 13 12.49Z" fill="#6200ea"/>
+                                <path d="M17.5 15.83C15.8 15.83 14.26 16.13 13 16.66V18.32C14.13 17.68 15.7 17.33 17.5 17.33C18.38 17.33 19.23 17.42 20 17.59V16.07C19.21 15.92 18.36 15.83 17.5 15.83Z" fill="#6200ea"/>
+                            </svg>
+                            <h3>No courses yet!</h3>
+                            <p>Click the "Add Course" button to create your first course.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Modal -->
+            <div class="modal fade" id="courseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="courseModalLabel">Add New Course</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="course-form">
+                                <input type="hidden" id="course-id">
+                                <div class="mb-3">
+                                    <label for="course-title" class="form-label">Course Title</label>
+                                    <input type="text" class="form-control" id="course-title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="course-description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="course-description" rows="3"></textarea>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="course-provider" class="form-label">Provider/Instructor</label>
+                                        <input type="text" class="form-control" id="course-provider">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="course-category" class="form-label">Category</label>
+                                        <select class="form-select" id="course-category">
+                                            <option value="programming">Programming</option>
+                                            <option value="design">Design</option>
+                                            <option value="business">Business</option>
+                                            <option value="science">Science</option>
+                                            <option value="language">Language</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="course-url" class="form-label">Course URL (optional)</label>
+                                        <input type="url" class="form-control" id="course-url" placeholder="https://example.com/course">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="course-status" class="form-label">Status</label>
+                                        <select class="form-select" id="course-status">
+                                            <option value="not-started">Not Started</option>
+                                            <option value="in-progress">In Progress</option>
+                                            <option value="completed">Completed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="course-cover" class="form-label">Cover Image</label>
+                                    <input type="text" class="form-control" id="course-cover" placeholder="Cover image path or URL">
+                                    <div class="form-text">Enter a URL to an image, or choose from our predefined covers below.</div>
+                                    <div class="predefined-covers mt-2">
+                                        <div class="covers-grid">
+                                            <div class="cover-option" data-cover="static/covers/abstract-cover-1.svg">
+                                                <div class="cover-preview" style="background-image: url('static/covers/abstract-cover-1.svg');"></div>
+                                                <span>Abstract 1</span>
+                                            </div>
+                                            <div class="cover-option" data-cover="static/covers/abstract-cover-2.svg">
+                                                <div class="cover-preview" style="background-image: url('static/covers/abstract-cover-2.svg');"></div>
+                                                <span>Abstract 2</span>
+                                            </div>
+                                            <div class="cover-option" data-cover="static/covers/abstract-cover-3.svg">
+                                                <div class="cover-preview" style="background-image: url('static/covers/abstract-cover-3.svg');"></div>
+                                                <span>Abstract 3</span>
+                                            </div>
+                                            <div class="cover-option" data-cover="static/covers/abstract-cover-4.svg">
+                                                <div class="cover-preview" style="background-image: url('static/covers/abstract-cover-4.svg');"></div>
+                                                <span>Abstract 4</span>
+                                            </div>
+                                            <div class="cover-option" data-cover="static/covers/abstract-cover-5.svg">
+                                                <div class="cover-preview" style="background-image: url('static/covers/abstract-cover-5.svg');"></div>
+                                                <span>Abstract 5</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-course-btn">Save Course</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Detail Modal -->
+            <div class="modal fade" id="courseDetailModal" tabindex="-1" aria-labelledby="courseDetailModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="courseDetailModalLabel">Course Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="course-detail-header">
+                                <div class="course-detail-cover" id="detail-course-cover"></div>
+                                <div class="course-detail-info">
+                                    <h3 id="detail-course-title"></h3>
+                                    <p id="detail-course-description"></p>
+                                    <div class="course-meta">
+                                        <div class="meta-item">
+                                            <i class="fas fa-user"></i>
+                                            <span id="detail-course-provider"></span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-tag"></i>
+                                            <span id="detail-course-category"></span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="fas fa-link"></i>
+                                            <a href="#" target="_blank" id="detail-course-url">View Course</a>
+                                        </div>
+                                    </div>
+                                    <div class="progress-container">
+                                        <div class="progress-label">
+                                            <span>Progress:</span>
+                                            <span id="detail-progress-percentage">0%</span>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" id="detail-progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="nav nav-tabs" id="courseDetailTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="topics-tab" data-bs-toggle="tab" data-bs-target="#topics-content" type="button" role="tab" aria-controls="topics-content" aria-selected="true">Topics</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials-content" type="button" role="tab" aria-controls="materials-content" aria-selected="false">Study Materials</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="notes-tab" data-bs-toggle="tab" data-bs-target="#notes-content" type="button" role="tab" aria-controls="notes-content" aria-selected="false">Notes</button>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content" id="courseDetailTabContent">
+                                <div class="tab-pane fade show active" id="topics-content" role="tabpanel" aria-labelledby="topics-tab">
+                                    <div class="topics-header">
+                                        <h4>Course Topics</h4>
+                                        <button class="btn btn-primary" id="add-topic-btn">
+                                            <i class="fas fa-plus"></i> Add Topic
+                                        </button>
+                                    </div>
+                                    <div class="topics-list" id="topics-list">
+                                        <!-- Topics will be loaded here dynamically -->
+                                        <div class="empty-state" id="empty-topics-state">
+                                            <i class="fas fa-list-ul"></i>
+                                            <p>No topics added yet. Add your first topic to track your progress.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="materials-content" role="tabpanel" aria-labelledby="materials-tab">
+                                    <div class="materials-header">
+                                        <h4>Study Materials</h4>
+                                        <button class="btn btn-primary" id="add-material-btn">
+                                            <i class="fas fa-plus"></i> Add Material
+                                        </button>
+                                    </div>
+                                    <div class="materials-list" id="materials-list">
+                                        <!-- Materials will be loaded here dynamically -->
+                                        <div class="empty-state" id="empty-materials-state">
+                                            <i class="fas fa-file-alt"></i>
+                                            <p>No study materials added yet. Upload materials to organize your study resources.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="notes-content" role="tabpanel" aria-labelledby="notes-tab">
+                                    <div class="notes-container">
+                                        <h4>Course Notes</h4>
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="course-notes" rows="10" placeholder="Add your course notes here..."></textarea>
+                                        </div>
+                                        <div class="notes-footer">
+                                            <button class="btn btn-primary" id="save-notes-btn">Save Notes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic Modal -->
+            <div class="modal fade" id="topicModal" tabindex="-1" aria-labelledby="topicModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="topicModalLabel">Add New Topic</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="topic-form">
+                                <input type="hidden" id="topic-id">
+                                <input type="hidden" id="topic-course-id">
+                                <div class="mb-3">
+                                    <label for="topic-title" class="form-label">Topic Title</label>
+                                    <input type="text" class="form-control" id="topic-title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="topic-description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="topic-description" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="topic-url" class="form-label">Resource URL (optional)</label>
+                                    <input type="url" class="form-control" id="topic-url" placeholder="https://example.com/resource">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="topic-order" class="form-label">Order</label>
+                                    <input type="number" class="form-control" id="topic-order" value="1" min="1">
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="topic-completed">
+                                        <label class="form-check-label" for="topic-completed">
+                                            Mark as completed
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="save-topic-btn">Save Topic</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Material Upload Modal -->
+            <div class="modal fade" id="materialModal" tabindex="-1" aria-labelledby="materialModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="materialModalLabel">Upload Study Material</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="material-form">
+                                <input type="hidden" id="material-course-id">
+                                <div class="mb-3">
+                                    <label for="material-title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="material-title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="material-file" class="form-label">File</label>
+                                    <input type="file" class="form-control" id="material-file" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                                    <div class="form-text">Supported formats: PDF, DOC, DOCX, PPT, PPTX</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="material-description" class="form-label">Description (Optional)</label>
+                                    <textarea class="form-control" id="material-description" rows="2"></textarea>
+                                </div>
+                                <div class="upload-progress-container">
+                                    <div class="progress">
+                                        <div class="progress-bar" id="upload-progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="upload-material-btn">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="main-footer">
+                <p>&copy; 2023 Trackify. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/db.js"></script>
+    <script src="static/js/app.js"></script>
+    <script src="static/js/courses.js"></script>
+    <script>
+        // Register service worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('static/js/sw.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
